@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eternals Information</title>
+    <style>
+        img {
+            max-width: 400px;
+            max-height: 800px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Eternals</h1>
+    <ul id="eternalsList">
+        <li>Ikaris</li>
+        <li>Sersi</li>
+        <li>Thena</li>
+        <li>Gilgamesh</li>
+        <li>Druig</li>
+    </ul>
+
+    <p>
+        <label for="attributeInput">Enter an attribute:</label>
+        <input type="text" id="attributeInput" name="attributeInput">
+        <button onclick="findEternalsByAttribute()">Search</button>
+    </p>
+
+    <ul id="resultList">
+    </ul>
+
+    <img src="" alt="Eternal Image" id="eternalImage">
+
+    <script>
+        const eternals = [
+            {
+                name: "Ikaris",
+                skills: ["Flight", "Superhuman Strength", "Eye Beams"],
+                imageSrc: "ikaris.jpg"
+            },
+            {
+                name: "Sersi",
+                skills: ["Transmutation", "Telepathy", "Immortality"],
+                imageSrc: "sersi.jpg"
+            },
+            {
+                name: "Thena",
+                skills: ["Superhuman Speed", "Enhanced Durability", "Sword"],
+                imageSrc: "thena.jpg"
+            },
+            {
+                name: "Gilgamesh",
+                skills: ["Superhuman Strength", "Invulnerability"],
+                imageSrc: "gilgamesh.jpg"
+            },
+            {
+                name: "Druig",
+                skills: ["Telekinesis", "Mind Control", "Languages"],
+                imageSrc: "druig.jpg"
+            }
+        ];
+
+        function findEternalsByAttribute() {
+            const inputAttribute = document.getElementById("attributeInput").value.toLowerCase();
+            const resultList = document.getElementById("resultList");
+            const eternalImage = document.getElementById("eternalImage");
+            resultList.innerHTML = "";
+
+            const matchingEternals = eternals.filter(eternal =>
+                eternal.skills.some(skill => skill.toLowerCase() === inputAttribute)
+            );
+
+            if (matchingEternals.length === 0) {
+                resultList.innerHTML = "No Eternals found with this attribute.";
+                eternalImage.style.display = "none";
+            } else {
+                matchingEternals.forEach(eternal => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `${eternal.name} has the skill: ${inputAttribute}`;
+                    resultList.appendChild(listItem);
+                });
+                if (matchingEternals[0].imageSrc) {
+                    eternalImage.src = matchingEternals[0].imageSrc;
+                    eternalImage.style.display = "block";
+                } else {
+                    eternalImage.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
